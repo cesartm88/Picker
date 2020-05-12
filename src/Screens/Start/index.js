@@ -71,14 +71,16 @@ export class _Start extends Window {
     }
     let selectedDate = moment(formatDate, 'YYYY-MM-DD HH:mm');
     let limiteDate = moment().add(30, 'days');
+    let inferiorLimit = moment();
     if (!isEmpty(selectedDate)) {
       let dif = limiteDate.diff(selectedDate, 'days');
+      let inferiorDif = selectedDate.diff(inferiorLimit,'days');
       console.log(
-        {dif},
-        limiteDate.format('YYYY-MM-DD'),
+        {inferiorDif},
+        inferiorLimit.format('YYYY-MM-DD'),
         selectedDate.format('YYYY-MM-DD'),
       );
-      if (dif >= 0) {
+      if (dif >= 0 && inferiorDif >= 0) {
         this.props.saveOrder({
           selectedDate: moment(selectedDate).format('DD/MM/YYYY HH:ss'),
         });
@@ -125,12 +127,15 @@ export class _Start extends Window {
                 <TouchableWithoutFeedback onPress={this.onSave.bind(this)}>
                   <Text style={styles.TextSave}>Guardar</Text>
                 </TouchableWithoutFeedback>
+               
               </View>
+              
             </View>
           </View>
+          <Text style={{marginTop:15,textAlign:'center'}}> Listado de Ordenes</Text>
           <FlatList
           style={styles.list}
-            data={this.props.Orders}
+            data={this.props.ListOrders}
             keyExtractor={(item,id)=> id.toString()}
             renderItem={({item}) => (
 
@@ -150,8 +155,10 @@ export class _Start extends Window {
 
 const mapStateToProps = ({Orders}) => {
   console.log({Orders});
+  let ListOrders = Orders.Orders;
+  console.log({ListOrders});
   return {
-    Orders,
+    ListOrders,
   };
 };
 
