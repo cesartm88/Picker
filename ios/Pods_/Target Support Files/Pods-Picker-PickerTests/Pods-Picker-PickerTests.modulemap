@@ -1,0 +1,6 @@
+module Pods_Picker_PickerTests {
+  umbrella header "Pods-Picker-PickerTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
